@@ -4,5 +4,5 @@
 
 # Resources
 1.  https://learn.microsoft.com/en-us/dotnet/csharp/tour-of-csharp/tutorials/
-2.  https://platform.openai.com/docs/overview
-3.  https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents
+2.  https://cookbook.openai.com/topic/agents
+3.  https://www.anthropic.com/engineering/building-effective-agents
