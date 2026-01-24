@@ -19,8 +19,7 @@ class Program {
         }
     }
 
-    static string ProcessInput(string input) 
-    {
+    static string ProcessInput(string input) {
         // Placeholder for processing input and generating a plan
         return input != "" ? $"Processed input: {input}" : "No input provided.";
     }
