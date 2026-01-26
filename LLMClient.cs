@@ -1,5 +1,6 @@
 using States;
 using OpenAI;
+using OpenAI.Responses;
 
 namespace LLM {
     /// <summary>
@@ -14,19 +15,26 @@ namespace LLM {
 
     // "wrapper classes" of the sdk provided classes (if they are provided)
     public class OpenAILLMClient : ILLMClient {
-        //  a wrapper(adaptor) class around OpenAIClient 
-        private readonly OpenAIClient client = new(
-            Environment.GetEnvironmentVariable("OPENAI_API_KEY")
+        // we are talking to the response endpoint: https://platform.openai.com/docs/api-reference/responses/create
+#pragma warning disable OPENAI001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
+
+        private readonly ResponsesClient client = new(
+#pragma warning restore OPENAI001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
+
+
+            model: "gpt-5-nano-2025-08-07`",
+
+            apiKey: Environment.GetEnvironmentVariable("OPENAI_API_KEY")
         );
         Task<string> makeRequest(List<Message> state) {
-            // shall make calls to endpoints via client
-            // might have to serialize `state`
+            // call the endpoint
+            // 1. Serialize `state`, and determine how much should be passed as parameter
+            // 2. Deserialize the response, and only return content[0].text
         }
     }
     public class ClaudeLLMClient : ILLMClient {
-
     }
     public class AzureLLMClient : ILLMClient {
-
     }
+
 }

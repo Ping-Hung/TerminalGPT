@@ -6,5 +6,9 @@
 a minimal data-flow diagram ![Data Flow Diagram](App_Data_Flow.png)
 
 # Resources
+## Csharp Tutorial
 1.  https://learn.microsoft.com/en-us/dotnet/csharp/tour-of-csharp/tutorials/
-2.  https://platform.openai.com/docs/api-reference/authentication?utm_source=chatgpt.com
+## OpenAI API
+1.  https://platform.openai.com/docs/api-reference/authentication?utm_source=chatgpt.com
+2.  https://www.nuget.org/packages/OpenAI#how-to-use-responses-with-streaming-and-reasoning
+
