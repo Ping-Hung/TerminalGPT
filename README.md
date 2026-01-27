@@ -6,16 +6,19 @@ a minimal data-flow diagram ![Data Flow Diagram](App_Data_Flow.png)
 
 # Learnt Concepts
 1. **Vibe Coding**:
-+ How to leverage the power of chatGPT to learn a new programming language and build a usable app.
-2. **OO programming**: 
-+ How to model the entire app as interactions between entities with distinct roles.
-3. **Pattern matching**:
-+ `switch` expression
-+ `=>` (arrow function) for lambda functions.
-4. **Adaptor pattern**:
-+ Use `interface` (or **abstract base class** in C++) as wrapper around a service(dependency), so the service could easily interact with the rest of the program through the client.
-+ The client is implemented based on the contract defined in the `interface`/**abstract base class**.
-+ Adaptors implement the client and wraps around the service.
+  + How to leverage the power of chatGPT to learn a new programming language and build a usable app.
+2. **OO Programming**: 
+  + How to model the entire app as interactions between entities with distinct roles.
+3. **C# Features**:
+  + **Pattern matching**:
+    - `switch` expression
+    - `=>` (arrow function) for lambda functions.
+  + **Indeces and Range**
+    - https://learn.microsoft.com/en-us/dotnet/csharp/tutorials/ranges-indexes#type-support-for-indices-and-ranges
+4. **Adaptor Pattern**:
+  + Use `interface` (or **abstract base class** in C++) as wrapper around a service(dependency), so the service could easily interact with the rest of the program through the client.
+  + The client is implemented based on the contract defined in the `interface`/**abstract base class**.
+  + Adaptors implement the client and wraps around the service.
 
 # Resources
 ## Csharp Tutorial

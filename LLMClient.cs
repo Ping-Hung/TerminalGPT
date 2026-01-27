@@ -25,23 +25,25 @@ namespace LLM {
         );
 
         public async Task<string> makeRequest(List<Message> state) {
-            // convert state to a parameter acceptable by CreateResponse and
-            // determine how much should be passed as parameter
-            
-			var prompt = state[state.Count - 1];
-            var context = state[state.Count - 2];   // this in general shall be a slice (subarray) of state
+            Message prompt = state[^1]; // last element in list
+            // context in the most general case is a range (subarray), might implement some context selection logic here,
+            // but  will only use the latest response from LLM for now
+            var context = state[^2];
 
-            // 2. call the end point.
-            var response = await client.CreateResponse(
+            // Call the end point with context
+            // determine how much should be passed as parameter
+            ResponseResult response = await client.CreateResponseAsync(
                 userInputText: prompt.Content,
-                previousResponseId: // some Response id,
+                previousResponseId: context?.Content    // a string id for previous responses, can be null
             );
 
-            // 3. Deserialize the response, and only return content[0].text
-            // 4. Handle possible error on failed calls
-            
-            
+            // Handle possible error on failed calls
+            if (response == null) {
+                throw new Exception($"openAI request with prompt {prompt} failed");
+            }
 
+            // Return the generated text in the response objecct
+            return response.GetOutputText();
         }
     }
     public class ClaudeLLMClient : ILLMClient {
