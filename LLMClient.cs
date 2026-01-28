@@ -25,25 +25,17 @@ namespace LLM {
         );
 
         public async Task<string> makeRequest(List<Message> state) {
-            Message prompt = state[^1]; // last element in list
-            // context in the most general case is a range (subarray), might implement some context selection logic here,
-            // but  will only use the latest response from LLM for now
-            var context = state[^2];
+            /** 
+             * Context in the most general case is a range (subarray).
+             */
+            IContextSelector selector = new SlidingWindowContextSelector(windowSize: 2);
+            var context = selector.SelectContext(state: state);    // second last to the last
 
-            // Call the end point with context
-            // determine how much should be passed as parameter
-            ResponseResult response = await client.CreateResponseAsync(
-                userInputText: prompt.Content,
-                previousResponseId: context?.Content    // a string id for previous responses, can be null
-            );
-
-            // Handle possible error on failed calls
-            if (response == null) {
-                throw new Exception($"openAI request with prompt {prompt} failed");
-            }
-
-            // Return the generated text in the response objecct
-            return response.GetOutputText();
+            // Call the end point with context, call with serialized context
+            ResponseResult response = await client
+                .CreateResponseAsync(userInputText: Serializer.Serialize(value: context))
+                .ConfigureAwait(false);     // null check + avoid context capture --ChatGPT
+            return response.GetOutputText();    // only generated text is returned
         }
     }
     public class ClaudeLLMClient : ILLMClient {
@@ -59,16 +51,42 @@ namespace LLM {
             throw new NotImplementedException();
         }
         public async Task<string> makeRequest(List<Message> state) {
-            throw new NotImplementedException(); 
+            throw new NotImplementedException();
         }
     }
 
-    // helper class dedicated to serialize data using C# generics
-    public class Serializer {
+    // helper classes and interfaces 
+    class Serializer {
         static JsonSerializerOptions options = new JsonSerializerOptions { WriteIndented = true };
         public static string Serialize<T>(T value) {
             return JsonSerializer.Serialize(value, options: options);
         }
     }
+    public interface IContextSelector {
+        // implement new strategies if want to use a different strategy
+        IReadOnlyList<Message> SelectContext(IReadOnlyList<Message> state);
+    }
 
+    public class SlidingWindowContextSelector : IContextSelector {
+        /// <summary>
+        ///     Returns the last <paramref name="windowSize"/> messages
+        ///     from the conversation state.
+        /// </summary>
+        private readonly int windowSize;
+
+        public SlidingWindowContextSelector(int windowSize) {
+            if (windowSize <= 0) {
+                throw new ArgumentException("windowSize must be positive");
+            }
+            this.windowSize = windowSize;
+        }
+
+        public IReadOnlyList<Message> SelectContext(IReadOnlyList<Message> state) {
+            if (state.Count <= windowSize) {
+                return state;
+            }
+
+            return state.TakeLast(windowSize).ToList();
+        }
+    }
 }

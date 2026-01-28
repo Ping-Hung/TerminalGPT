@@ -32,8 +32,7 @@ namespace Program {
             // this function only belongs to the Program class, thus use static
             string? input;
             while (true) {
-                Console.WriteLine(
-                    "Enter a model name, one of (OpenAI, Claude,or Azure)");
+                Console.WriteLine( "Enter a model name, one of (OpenAI, Claude,or Azure)");
                 input = Console.ReadLine()?.Trim();
                 string result = input ?? "EOF";
                 switch (result) {
