@@ -35,6 +35,7 @@ namespace Program {
             string? input;
             while (true) {
                 Console.WriteLine( "Enter a model name, one of (OpenAI, Claude,or Azure)");
+                Console.Write("> ");
                 input = Console.ReadLine()?.Trim();
                 string result = input ?? "EOF";
                 switch (result) {
