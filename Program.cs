@@ -3,7 +3,7 @@ using chatSession;
 
 namespace Program {
     public class Program {
-        public static int Main() {
+        public static async Task<int> Main() {
             string modelName = setupModel();
             if (modelName == "EOF") {
                 Console.WriteLine("Entered EOF, program exit");
@@ -25,8 +25,8 @@ namespace Program {
                     default:
                         break;
                 }
-                // "resolve" the Task then write it to console
-                string reply = session.HandleUserInputAsync(userInput).Result;
+                // don't Resolve the Task then write it to console, it synchronously wait async tasks to complete
+                string reply = await session.HandleUserInputAsync(userInput);
                 Console.WriteLine(reply);
             }
         }

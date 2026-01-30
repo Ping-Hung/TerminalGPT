@@ -37,7 +37,7 @@ namespace LLM {
             // Call the end point with context, call with serialized context
             ResponseResult response = await client
                 .CreateResponseAsync(userInputText: Serializer.Serialize(value: context))
-                .ConfigureAwait(false);     // null check + avoid context capture --ChatGPT
+                .ConfigureAwait(false);         // null check + avoid context capture --ChatGPT
             return response.GetOutputText();    // only generated text is returned
         }
     }
