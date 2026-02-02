@@ -19,6 +19,9 @@ namespace LLM {
         // we are talking to the response endpoint:
         // https://platform.openai.com/docs/api-reference/responses/create
 
+        // Use of experimental APIs which are subject to change: have to acknowledge their 
+        // experimental status by suppressing the corresponding warning.
+        #pragma warning disable OPENAI001
         private readonly ResponsesClient client; 
 
         public OpenAILLMClient() {
@@ -41,6 +44,7 @@ namespace LLM {
             return response.GetOutputText();    // only generated text is returned
         }
     }
+    #pragma warning restore OPENAI001
 
     public class ClaudeLLMClient : ILLMClient {
         public ClaudeLLMClient() {
