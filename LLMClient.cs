@@ -19,6 +19,9 @@ namespace LLM {
         // we are talking to the streaming endpoint
         // https://platform.openai.com/docs/guides/streaming-responses?lang=csharp
 
+        // Use of experimental APIs which are subject to change: have to acknowledge their 
+        // experimental status by suppressing the corresponding warning.
+        #pragma warning disable OPENAI001
         private readonly ResponsesClient client; 
 
         public OpenAILLMClient() {
@@ -51,6 +54,7 @@ namespace LLM {
             return 
         }
     }
+    #pragma warning restore OPENAI001
 
     public class ClaudeLLMClient : ILLMClient {
         public ClaudeLLMClient() {
