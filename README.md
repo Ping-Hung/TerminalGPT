@@ -1,4 +1,4 @@
-# C# Console App
+# TerminalGPT
 * Console app built with C# for the sake of learning. 
 * Current objective is to build a Mininal "LLM-Shell" desktop application.
 
@@ -34,4 +34,5 @@ a minimal data-flow diagram ![Data Flow Diagram](App_Data_Flow.png)
 4.  https://platform.openai.com/docs/guides/text
 
 # Design Notes
+
 - ``context``, the user-assistant chat history list, is passed into the LLM as a serialized JSON list.
